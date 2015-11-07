@@ -4,7 +4,7 @@ import Constants from "../constants/ReversiConstants";
 import PlayerActionCreators from "../actions/PlayerActionCreators";
 import PieceSection from "./PieceSection.react";
 
-const { StyleSheet, View, Text } = React,
+const { StyleSheet, TouchableHighlight, View } = React,
       StyleValues = Constants.get("Styles"),
       boardWidth = StyleValues.get("board_width"),
       border = StyleValues.get("piece_border"),
@@ -25,13 +25,13 @@ const GridSection = React.createClass({
         }
 
         return (
-            <View style={[baseStyle, style]}>
-                <PieceSection player={this.props.grid.get("value")} />
-            </View >
+            <TouchableHighlight style={[baseStyle, style]} onPress={this._onPress}>
+              <View><PieceSection player={this.props.grid.get("value")} /></View>
+            </TouchableHighlight>
         );
     },
 
-    _onClick: function(event) {
+    _onPress: function(event) {
         if (Immutable.is(this.props.grid.get("value"), AVAILABLE)) {
             PlayerActionCreators.clickThread(this.props.grid);
         }

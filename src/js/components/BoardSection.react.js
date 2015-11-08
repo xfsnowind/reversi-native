@@ -9,11 +9,11 @@ let { StyleSheet, View, Text, } = React;
 
 const StyleValues = Constants.get("Styles"),
       boardWidth = StyleValues.get("board_width"),
-      boardPadding = StyleValues.get("board_padding"),
+      boardMargin = StyleValues.get("board_margin"),
       styles = StyleSheet.create({
         board: {
-          marginTop: 100,
-          marginHorizontal: boardPadding,
+          marginTop: 20,
+          marginHorizontal: boardMargin,
           width:  boardWidth,
           height: boardWidth,
         },

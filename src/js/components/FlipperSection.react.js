@@ -9,10 +9,6 @@ const { StyleSheet, View, Easing, Animated } = React,
       margin = 1,
       pieceSize = boardWidth / 9 - 2 * margin - 2 * border,
       styles = StyleSheet.create({
-        flipper: {
-          // width:  pieceSize,
-          // height: pieceSize,
-        },
         flipper__piece: {
           position: "absolute",
           width:  pieceSize,
@@ -50,21 +46,19 @@ const FlipperSection = React.createClass({
         animationStyle = this.state.animationValue;
 
       return (
-        <View style={styles.flipper}>
-          <Animated.View style={{transform: [{rotateY: animationStyle.interpolate({
-            inputRange:  [0, 1],
-            outputRange: ["0deg", "180deg"]
-          })}]}}>
-            <View style={[styles.flipper__piece,
-                          styles.flipper__white,
-                          player == "WHITE" ?
-                            styles.flipper__front : styles.flipper__back]} />
-            <View style={[styles.flipper__piece,
-                          styles.flipper__black,
-                          player == "BLACK" ?
-                            styles.flipper__front : styles.flipper__back]} />
-          </Animated.View>
-        </View>
+        <Animated.View style={{transform: [{rotateY: animationStyle.interpolate({
+          inputRange:  [0, 1],
+          outputRange: ["0deg", "180deg"]
+        })}]}}>
+          <View style={[styles.flipper__piece,
+                        styles.flipper__white,
+                        player == "WHITE" ?
+                          styles.flipper__front : styles.flipper__back]} />
+          <View style={[styles.flipper__piece,
+                        styles.flipper__black,
+                        player == "BLACK" ?
+                          styles.flipper__front : styles.flipper__back]} />
+        </Animated.View>
     );
   },
 

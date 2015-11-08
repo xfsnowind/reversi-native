@@ -3,8 +3,8 @@ import keyMirror from "keymirror";
 import Dimensions from "Dimensions";
 
 const screenWidth = Dimensions.get("window").width,
-      boardPadding = 10,
-      boardWidth = screenWidth - 2 * boardPadding;
+      boardMargin = 10,
+      boardWidth = screenWidth - 2 * boardMargin;
 
 export default Immutable.fromJS({
   "GridStatus": keyMirror({
@@ -30,7 +30,7 @@ export default Immutable.fromJS({
   }),
   "Styles": {
     "board_width": boardWidth,
-    "board_padding": boardPadding,
+    "board_margin": boardMargin,
     "piece_border": 1,
   }
 });

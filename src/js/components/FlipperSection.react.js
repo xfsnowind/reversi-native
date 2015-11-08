@@ -2,7 +2,7 @@ import React from 'react-native';
 import Immutable from 'immutable';
 import Constants from "../constants/ReversiConstants";
 
-const { StyleSheet, View, Text } = React,
+const { StyleSheet, View, Easing, Animated } = React,
       StyleValues = Constants.get("Styles"),
       boardWidth = StyleValues.get("board_width"),
       border = StyleValues.get("piece_border"),
@@ -10,13 +10,22 @@ const { StyleSheet, View, Text } = React,
       pieceSize = boardWidth / 9 - 2 * margin - 2 * border,
       styles = StyleSheet.create({
         flipper: {
-          // position: "absolute"
+          // width:  pieceSize,
+          // height: pieceSize,
         },
         flipper__piece: {
-          margin: margin,
+          position: "absolute",
           width:  pieceSize,
           height: pieceSize,
+          margin: margin,
           borderRadius: pieceSize / 2,
+          backfaceVisibility: "hidden",
+        },
+        flipper__front: {
+          transform: [{rotateY: "0deg"}]
+        },
+        flipper__back: {
+          transform: [{rotateY: "180deg"}]
         },
         flipper__white: {
           backgroundColor: "white",
@@ -28,15 +37,42 @@ const { StyleSheet, View, Text } = React,
 
 const FlipperSection = React.createClass({
 
-  render: function() {
-    let player = this.props.player;
-    console.log(player);
-        // <View className={"flipper__piece flipper__black " + (player == "BLACK" ? "flipper__front" : "flipper__back")}> </View>
+  getInitialState: function () {
+    return {animationValue: new Animated.Value(0)};
+  },
 
-    return (
-        <View style={[styles.flipper__piece,
-                      player == "WHITE" ? styles.flipper__white : styles.flipper__black]} />
+  shouldComponentUpdate: function (nextProps, nextState) {
+    return this.props.player != nextProps.player;
+  },
+
+  render: function () {
+    let player = this.props.player,
+        animationStyle = this.state.animationValue;
+
+      return (
+        <View style={styles.flipper}>
+          <Animated.View style={{transform: [{rotateY: animationStyle.interpolate({
+            inputRange:  [0, 1],
+            outputRange: ["0deg", "180deg"]
+          })}]}}>
+            <View style={[styles.flipper__piece,
+                          styles.flipper__white,
+                          player == "WHITE" ?
+                            styles.flipper__front : styles.flipper__back]} />
+            <View style={[styles.flipper__piece,
+                          styles.flipper__black,
+                          player == "BLACK" ?
+                            styles.flipper__front : styles.flipper__back]} />
+          </Animated.View>
+        </View>
     );
+  },
+
+  componentWillUpdate: function () {
+    Animated.timing(this.state.animationValue, {
+      duration: 800,
+      toValue: Math.abs(this.state.animationValue._value - 1),
+    }).start();
   }
 });
 

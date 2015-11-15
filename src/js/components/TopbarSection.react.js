@@ -9,23 +9,29 @@ const { StyleSheet, Text, View } = React,
       GridStatus = Constants.get("GridStatus"),
       boardWidth = StyleValues.get("board_width"),
       boardMargin = StyleValues.get("board_margin"),
+
       styles = StyleSheet.create({
         "topbar": {
           marginTop: 40,
-          marginHorizontal: boardMargin + boardWidth / 9,
+          marginLeft: boardMargin + boardWidth / 9,
+          marginRight: boardMargin,
           height: boardWidth * 2 / 9,
-          width:  boardWidth * 8 / 9
+          width:  boardWidth * 8 / 9,
         },
         "topbar__row": {
           flex: 1,
           flexDirection: "row",
-          width: boardWidth * 8 / 9,
+          justifyContent: "space-between",
+          alignItems: "flex-start",
           height: boardWidth / 9,
         },
         "topbar__grid": {
+          width:  boardWidth / 9,
+          height: boardWidth / 9,
+        },
+        "topbar__text": {
           justifyContent: "center",
-          alignItems: 'center',
-          position: "absolute"
+          alignItems: "center",
         }
       });
 
@@ -74,24 +80,26 @@ const TopbarSection = React.createClass({
         return (
             <View style={styles.topbar}>
               <View style={styles.topbar__row}>
-                <View style={[styles.topbar__grid, {left: boardWidth / 18}]}>
+                <View style={styles.topbar__grid}>
                   <FlipperSection player={"WHITE"}/>
                 </View>
-                <View style={[styles.topbar__grid, {left: boardWidth * 2.75 / 9}]}>
+                <View style={[styles.topbar__grid,
+                              styles.topbar__text,
+                              {width: boardWidth * 3 / 9}]}>
                   <Text>{middleText}</Text>
                 </View>
-                <View style={[styles.topbar__grid, {left: boardWidth * 6.5 / 9}]}>
+                <View style={styles.topbar__grid}>
                   <FlipperSection player={"BLACK"}/>
                 </View>
               </View>
               <View style={styles.topbar__row}>
-                <View style={[styles.topbar__grid, {left: boardWidth * 0.725 / 9}]}>
+                <View style={[styles.topbar__grid, styles.topbar__text]}>
                   <Text>{numWhite}</Text>
                 </View>
-                <View style={[styles.topbar__grid, {left: boardWidth * 3.5 / 9}]}>
+                <View style={styles.topbar__grid}>
                   <FlipperSection player={player} />
                 </View>
-                <View style={[styles.topbar__grid, {left: boardWidth * 6.725 / 9}]}>
+                <View style={[styles.topbar__grid, styles.topbar__text]}>
                   <Text>{numBlack}</Text>
                 </View>
               </View>

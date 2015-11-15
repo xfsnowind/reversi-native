@@ -1,8 +1,50 @@
-import React from 'react';
+import React from 'react-native';
 import Immutable from 'immutable';
 import FootbarActionCreators from "../actions/FootbarActionCreators";
 import BoardStore from "../stores/BoardStore";
+import Constants from "../constants/ReversiConstants";
 
+const { StyleSheet, Text, View,
+        TouchableHighlight, Platform,
+        TouchableNativeFeedback } = React,
+      StyleValues = Constants.get("Styles"),
+      boardWidth = StyleValues.get("board_width"),
+      boardMargin = StyleValues.get("board_margin"),
+
+      styles = StyleSheet.create({
+        "footbar": {
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          height: 40,
+          marginTop: 20,
+          marginLeft: boardMargin + boardWidth / 9,
+          marginRight: boardMargin,
+        },
+        "footbar__right": {
+
+        },
+        "button": {
+          height: 43,
+          lineHeight: 1.42857,
+          paddingHorizontal: 6,
+          paddingVertical: 12,
+          marginBottom: 0,
+          textAlign: "center",
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderRadius: 4,
+        },
+        "button__disabled": {
+          opacity: 0.65
+        },
+        "button__success": {
+          backgroundColor: "#268bd2",
+        },
+        "button__danger": {
+          backgroundColor: "#dc322f",
+        }
+      });
 function getStateFromStores() {
     return {data: Immutable.Map({
         "canRegret": BoardStore.canRegret(),
@@ -12,49 +54,58 @@ function getStateFromStores() {
 
 var FootbarSection = React.createClass({
 
-    mixins: [PureRenderMixin],
-
     getInitialState: function() {
-        return getStateFromStores();
+      return getStateFromStores();
     },
 
     componentDidMount: function() {
-        BoardStore.addChangeListener(this._onChange);
+      BoardStore.addChangeListener(this._onChange);
     },
 
     componentWillUnmount: function() {
-        BoardStore.removeChangeListener(this._onChange);
+      BoardStore.removeChangeListener(this._onChange);
     },
 
     render: function() {
-        var regretDisable = !this.state.data.get("canRegret"),
-            gameOver = this.state.data.get("gameOver"),
-            regretButton;
+      var regretDisable = !this.state.data.get("canRegret"),
+          gameOver = this.state.data.get("gameOver"),
+          regretButton,
+          TouchableElement = TouchableHighlight;
 
-        if (regretDisable || gameOver) {
-            regretButton = <input type="Button" className="footbar__right button button--danger" onClick={this._regret} disabled="disabled" value="Regret"/>
-        } else {
-            regretButton = <input type="Button" className="footbar__right button button--danger" onClick={this._regret} value="Regret"/>
-        }
+      if (Platform.OS === 'android') {
+       TouchableElement = TouchableNativeFeedback;
+      };
 
-        return (
-            <div className="footbar">
-                <input type="button" className="footbar__left button button--success" onClick={this._start} value="New Game"/>
-                {regretButton}
-            </div>
-        );
+      if (regretDisable || gameOver) {
+        regretButton = <TouchableElement style={[styles.button, styles.button__danger, styles.button__disabled, styles.footbar__right]}>
+                         <Text>Regret</Text>
+                       </TouchableElement>;
+      } else {
+        regretButton = <TouchableElement style={[styles.button, styles.button__danger, styles.footbar__right]} onPress={this._regret.bind(this)}>
+                         <Text>Regret</Text>
+                       </TouchableElement>;
+      }
+
+      return (
+          <View style={styles.footbar}>
+            <TouchableElement style={[styles.button, styles.button__success]} onPress={this._start.bind(this)}>
+              <Text>New Game</Text>
+            </TouchableElement>
+            {regretButton}
+          </View>
+      );
     },
 
     _start: function() {
-        FootbarActionCreators.startGame();
+      FootbarActionCreators.startGame();
     },
 
     _regret: function() {
-        FootbarActionCreators.regret();
+      FootbarActionCreators.regret();
     },
 
     _onChange: function() {
-        this.setState(getStateFromStores());
+      this.setState(getStateFromStores());
     }
 });
 

@@ -63,9 +63,10 @@ const FlipperSection = React.createClass({
   },
 
   componentWillUpdate: function () {
+    let flipValue = this.state.animationValue._value == 1 ? 0 : 1;
     Animated.timing(this.state.animationValue, {
       duration: 800,
-      toValue: Math.abs(this.state.animationValue._value - 1),
+      toValue: flipValue,
     }).start();
   }
 });

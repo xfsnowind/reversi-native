@@ -26,11 +26,9 @@ const { StyleSheet, Text, View,
         },
         "button": {
           height: 43,
-          lineHeight: 1.42857,
           paddingHorizontal: 6,
           paddingVertical: 12,
           marginBottom: 0,
-          textAlign: "center",
           borderWidth: 1,
           borderStyle: "solid",
           borderRadius: 4,
@@ -81,14 +79,14 @@ var FootbarSection = React.createClass({
                          <Text>Regret</Text>
                        </TouchableElement>;
       } else {
-        regretButton = <TouchableElement style={[styles.button, styles.button__danger, styles.footbar__right]} onPress={this._regret.bind(this)}>
+        regretButton = <TouchableElement style={[styles.button, styles.button__danger, styles.footbar__right]} onPress={this._regret}>
                          <Text>Regret</Text>
                        </TouchableElement>;
       }
 
       return (
           <View style={styles.footbar}>
-            <TouchableElement style={[styles.button, styles.button__success]} onPress={this._start.bind(this)}>
+            <TouchableElement style={[styles.button, styles.button__success]} onPress={this._start}>
               <Text>New Game</Text>
             </TouchableElement>
             {regretButton}

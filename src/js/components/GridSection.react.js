@@ -21,7 +21,7 @@ const GridSection = React.createClass({
             style = {backgroundColor: "#2aa198"};
 
         if (Immutable.is(this.props.grid.get("value"), AVAILABLE)) {
-            style = {backgroundColor: "#93a1a1"};
+            style = {backgroundColor: "#83a1a1"};
         }
 
         return (

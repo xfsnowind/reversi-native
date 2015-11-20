@@ -8,6 +8,7 @@ import BoardSection from "./BoardSection.react";
 const { StyleSheet, View, Text, Component } = React,
       styles = StyleSheet.create({
           "app": {
+            flex: 1,
             backgroundColor: "#eee8d5",
           }});
 

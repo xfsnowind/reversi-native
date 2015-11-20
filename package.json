@@ -2,14 +2,42 @@
   "name": "reversi_native",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "start": "react-native start"
+
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:xfsnowind/reversi_native.git"
   },
+
+  "scripts": {
+    "start":         "react-native start",
+
+    "test":          "jest --coverage"
+  },
+
   "dependencies": {
-    "react-native": "^0.13.2",
+    "react-native":  "^0.11.4",
     "keymirror":     "^0.1.1",
     "immutable":     "^3.7.5",
     "flux":          "^2.1.1",
     "events":        "^1.1.0"
+  },
+
+  "devDependencies": {
+    "babel-jest":          "^6.0.1",
+    "jest-cli":      "^0.7.1"
+  },
+
+  "jest": {
+    "scriptPreprocessor":         "node_modules/react-native/jestSupport/preprocessor.js",
+    "setupEnvScriptFile":         "node_modules/react-native/jestSupport/env.js",
+    "testPathIgnorePatterns":     ["node_modules/",
+                                   "packager/react-packager/src/Activity/" ],
+    "testFileExtensions":         ["js"],
+    "collectCoverage":            true,
+    "unmockedModulePathPatterns": ["react-native",
+                                   "immutable",
+                                   "keymirror",
+                                   "events",
+                                   "flux"]
   }
 }

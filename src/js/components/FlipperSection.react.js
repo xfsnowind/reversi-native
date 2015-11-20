@@ -1,5 +1,4 @@
 import React from 'react-native';
-import Immutable from 'immutable';
 import Constants from "../constants/ReversiConstants";
 
 const { StyleSheet, View, Easing, Animated } = React,

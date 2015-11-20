@@ -21,9 +21,6 @@ const { StyleSheet, Text, View,
           marginLeft: boardMargin + boardWidth / 9,
           marginRight: boardMargin,
         },
-        "footbar__right": {
-
-        },
         "button": {
           height: 43,
           paddingHorizontal: 6,
@@ -65,29 +62,35 @@ var FootbarSection = React.createClass({
     },
 
     render: function() {
-      var regretDisable = !this.state.data.get("canRegret"),
+      let regretDisable = !this.state.data.get("canRegret"),
           gameOver = this.state.data.get("gameOver"),
           regretButton,
           TouchableElement = TouchableHighlight;
 
       if (Platform.OS === 'android') {
-       TouchableElement = TouchableNativeFeedback;
+        TouchableElement = TouchableNativeFeedback;
       };
 
       if (regretDisable || gameOver) {
-        regretButton = <TouchableElement style={[styles.button, styles.button__danger, styles.button__disabled, styles.footbar__right]}>
-                         <Text>Regret</Text>
+        regretButton = <TouchableElement>
+                         <View style={[styles.button, styles.button__danger, styles.button__disabled]}>
+                           <Text>Regret</Text>
+                         </View>
                        </TouchableElement>;
       } else {
-        regretButton = <TouchableElement style={[styles.button, styles.button__danger, styles.footbar__right]} onPress={this._regret}>
-                         <Text>Regret</Text>
+        regretButton = <TouchableElement onPress={this._regret}>
+                         <View style={[styles.button, styles.button__danger]}>
+                           <Text>Regret</Text>
+                         </View>
                        </TouchableElement>;
       }
 
       return (
           <View style={styles.footbar}>
-            <TouchableElement style={[styles.button, styles.button__success]} onPress={this._start}>
-              <Text>New Game</Text>
+            <TouchableElement onPress={this._start}>
+              <View style={[styles.button, styles.button__success]}>
+                <Text>New Game</Text>
+              </View>
             </TouchableElement>
             {regretButton}
           </View>

@@ -15,10 +15,11 @@
   },
 
   "dependencies": {
-    "react-native":  "^0.11.4",
+    "react-native":  "^0.14.2",
     "keymirror":     "^0.1.1",
     "immutable":     "^3.7.5",
     "flux":          "^2.1.1",
+    "object-assign": "^4.0.1",
     "events":        "^1.1.0"
   },
 
